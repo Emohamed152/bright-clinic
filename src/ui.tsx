@@ -20,8 +20,9 @@ export const ChoiceRow = ({ label, value, onChange, options }: { label: string; 
 export const FileButton = ({ children, onClick, disabled }: { children: React.ReactNode; onClick?: () => void; disabled?: boolean; variant?: string; pill?: boolean }) =>
     <button type="button" className="ui-btn" disabled={disabled} onClick={onClick}>{children}</button>;
 export const CloseButton = ({ onClick }: { onClick: () => void }) => <button type="button" className="ui-close" aria-label="إغلاق" onClick={onClick}>×</button>;
-export const TextField = ({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) =>
-    <label className="ui-textfield"><span className="ui-field-label">{label}</span><input value={value} onChange={(e) => onChange(e.target.value)} /></label>;
+export const TextField = ({ label, value, onChange, type, ltr, required, hidden }: { label: string; value: string; onChange: (v: string) => void; type?: string; ltr?: boolean; required?: boolean; hidden?: boolean }) =>
+    <label className="ui-textfield" style={hidden ? { position: 'absolute', left: '-9999px', height: 0, overflow: 'hidden' } : undefined}><span className="ui-field-label">{label}{required ? ' *' : ''}</span>
+        <input value={value} type={type || 'text'} dir={ltr ? 'ltr' : undefined} tabIndex={hidden ? -1 : undefined} autoComplete={hidden ? 'off' : undefined} onChange={(e) => onChange(e.target.value)} /></label>;
 export const Facts = ({ items }: { items: { label: string; value: string }[] }) =>
     <dl className="ui-facts">{items.map((f) => <div key={f.label}><dt>{f.label}</dt><dd>{f.value}</dd></div>)}</dl>;
 export const Rows = ({ children }: { children: React.ReactNode }) => <div className="ui-rows">{children}</div>;
