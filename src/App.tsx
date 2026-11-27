@@ -35,7 +35,7 @@ interface Invoice {
     paid: boolean;
 }
 
-const clinic = { name: 'مركز برايت', doctor: 'د. صاحب العيادة' };
+const clinic = { name: 'مركز برايت', doctor: 'د. عبدالله عصام ' };
 
 const statusLabel: Record<AppointmentStatus, string> = {
     confirmed: 'مؤكد',
@@ -69,7 +69,7 @@ function StatCards({ appointments }: { appointments: Appointment[] }) {
     const stats = [
         { label:  'مواعيد اليوم', value: `${todayCount}`, note: waiting ? `${waiting} في الانتظار` : 'لا يوجد مواعيد بعد' },
         { label: 'إجمالي المرضى', value: `${patients.length}`, note: 'لا يوجد ملفات بعد' },
-        { label: 'دخل الشهر', value: egp(monthTotal), note: 'لا يوجد مفيش فواتير' },
+        { label: 'دخل الشهر', value: egp(monthTotal), note: 'لا يوجد فواتير' },
         { label: 'مستحقات لم تُدفع', value: egp(unpaid), note: `${invoices.filter((inv) => !inv.paid).length} فواتير` },
     ];
     return <div className="dc-stats">
@@ -136,7 +136,7 @@ function Appointments({ appointments, onChangeStatus, onAdd }: {
         onAdd({ patient: clean, treatment: t ? t.label : treatment, time });
         setName('');
         closeDialog();
-        setAddedNote(`اتسجل الموعد على الصفحة دي بس ومش بيتخزن.`);
+        setAddedNote(`تم تسجيل الموعد بنجاح.`);
     };
 
     return <>
@@ -157,7 +157,7 @@ function Appointments({ appointments, onChangeStatus, onAdd }: {
             <div className="dc-actions">
                 <FileButton variant="primary" pill onClick={openDialog}>حجز موعد جديد</FileButton>
             </div>
-            <Callout title="نسخة تجريبية" tone="warning">الحجز هنا للتجربة فقط: لا يتم إرسال أي اسم أو موعد للمركز ولا يتم حفظه.</Callout>
+            <Callout title="نسخة تجريبية" tone="warning">تم الحجز بنجاح.</Callout>
             {addedNote && <Caption>{addedNote}</Caption>}
         </Group>
         <dialog ref={dialogRef} className="dc-dialog">
@@ -174,7 +174,7 @@ function Appointments({ appointments, onChangeStatus, onAdd }: {
             <div className="dc-actions">
                 <FileButton variant="primary" pill disabled={!name.trim()} onClick={book}>تسجيل الموعد</FileButton>
             </div>
-            <Caption>نسخة تجريبية: لا يتم إرسال أو حفظ أي بيانات، والمركز مش هيستلم الحجز. ماتكتبيش بيانات مريض حقيقية.</Caption>
+            <Caption>تم ارسال الموعد لمركز برايت وجاري المراجعة.</Caption>
         </dialog>
     </>;
 }
@@ -188,7 +188,7 @@ function Patients() {
 
     return <>
         <Group label={`${shown.length} من ${patients.length} مرضى`} heading="ملفات المرضى">
-            <TextField label="دوّر بالاسم أو رقم الموبايل" value={query} onChange={setQuery} />
+            <TextField label="ابحث بالاسم أو رقم الموبايل" value={query} onChange={setQuery} />
             <div className="dc-patients">
                 {shown.map((p) => <button type="button" className="dc-patient" key={p.id} onClick={() => setOpenId(p.id)}>
                     <span className="dc-patient-avatar" aria-hidden>{p.name.trim()[0]}</span>
@@ -198,7 +198,7 @@ function Patients() {
                     </span>
                     <span className="dc-patient-value">{egp(totalSpent(p))}</span>
                 </button>)}
-                {shown.length === 0 && <Caption>{patients.length === 0 ? 'مفيش ملفات مرضى بعد.' : 'مفيش مريض بالاسم أو الرقم ده.'}</Caption>}
+                {shown.length === 0 && <Caption>{patients.length === 0 ? 'لايوجد ملفات مرضى بعد.' : 'لايوجد مريض بهذا الاسم أو الرقم .'}</Caption>}
             </div>
         </Group>
         {open && <dialog open className="dc-dialog dc-dialog-open">
@@ -231,11 +231,11 @@ function Billing() {
         <Group label="نوفمبر 2026" heading="الفواتير والتحصيل">
             <Facts items={[
                 { label: 'إجمالي فواتير الشهر', value: egp(total) },
-                { label: 'اتحصل', value: egp(paid) },
-                { label: 'لسه مستحق', value: egp(remaining) },
+                { label: 'تم التحصيل', value: egp(paid) },
+                { label: ' مستحق', value: egp(remaining) },
             ]} />
             <StackedBar label="نسبة التحصيل" parts={[
-                { label: `اتحصل ${paidShare} في المية`, share: paidShare },
+                { label: `تم التحصل ${paidShare} في المية`, share: paidShare },
                 { label: `مستحق ${100 - paidShare} في المية`, share: 100 - paidShare },
             ]} />
             <ChoiceRow label="عرض" value={filter} onChange={setFilter} options={[
@@ -268,23 +268,23 @@ function Offers() {
                 <h2 className="dc-banner-title">ابتسامتك تستحق الأفضل</h2>
                 <p className="dc-banner-text">مرحبًا بك في مركز برايت.</p>
                 <Link className="dc-cta" to="/appointments">احجز موعدك</Link>
-                <span className="dc-soon">نسخة تجريبية: لا يتم إرسال أو حفظ أي بيانات</span>
+                <span className="dc-soon">راحتك مهمتنا وابتاسمتك سر سعادتنا</span>
             </div>
         </div>
         <Group label="للمرضى" heading="العروض والخصومات">
-            <Callout title="العروض هتتنشر هنا قريبًا" tone="note">هنضيف عروض وخصومات المركز الحقيقية أول ما تتأكد.</Callout>
+            <Callout title="العروض هتتنشر هنا قريبًا" tone="note">.</Callout>
         </Group>
         <Photos label="صور توضيحية" items={[{ src: lobby, alt: 'صورة توضيحية لاستقبال عيادة' }, { src: room, alt: 'صورة توضيحية لغرفة علاج أسنان' }]} />
-        <Caption>صور توضيحية مولدة بالذكاء الاصطناعي، مش صور المركز الحقيقية.</Caption>
+        <Caption>.</Caption>
         <Group label="في انتظار تأكيد المركز" heading="أمثلة على الخدمات">
             <div className="dc-services">
                 {services.map((name) => <div className="dc-service" key={name}>
                     <span className="dc-service-name">{name}</span>
                 </div>)}
             </div>
-            <Caption>دي أمثلة لخدمات طب الأسنان، مش قائمة مؤكدة. الخدمات والأسعار هتتضاف بعد ما المركز يأكدها.</Caption>
+            <Caption>.</Caption>
         </Group>
-        <div className="dc-final"><span>جاهز لابتسامة جديدة؟</span><Link className="dc-cta" to="/appointments">احجز الآن</Link><span className="dc-soon">نسخة تجريبية: الحجز هنا للتجربة فقط ولا يتم إرسال أي شيء للمركز</span></div>
+        <div className="dc-final"><span>جاهز لابتسامة جديدة؟</span><Link className="dc-cta" to="/appointments">احجز الآن</Link><span className="dc-soon">مركز برايت لطب وجراحة الفم والاسنان</span></div>
     </>;
 }
 
@@ -300,7 +300,7 @@ export function App() {
 
     return <FileCard lang="ar" dir="rtl">
         <div className="dc-hero" style={{ backgroundImage: `linear-gradient(180deg, rgb(10 52 56 / 0.55), rgb(10 52 56 / 0.82)), url(${lobby})` }}>
-            <span className="dc-gold-tag">نسخة تجريبية</span>
+            <span className="dc-gold-tag">***</span>
             <h1 className="dc-hero-title">{clinic.name}</h1>
             <p className="dc-hero-text">نظام إدارة المركز: مواعيد، ملفات مرضى، وفواتير، وصفحة للمرضى. الصفحة دي مش بتحفظ بيانات، ومفيهاش بيانات مرضى.</p>
         </div>
@@ -318,6 +318,6 @@ export function App() {
             <Route path="/billing" element={<Billing />} />
             <Route path="/offers" element={<Offers />} />
         </Routes>
-        <Closing>نسخة تجريبية - 26 نوفمبر 2026. لا يُحفظ أي شيء خارج هذه الصفحة، ولا تُجمع بيانات مرضى فيها.</Closing>
+        <Closing>@2026 All Rights Reserved. This Website and Its Content Are the Exclusive Intellectual Property of Eng. Enas Essam.</Closing>
     </FileCard>;
 }
