@@ -157,7 +157,7 @@ function Appointments({ appointments, onChangeStatus, onAdd }: {
             <div className="dc-actions">
                 <FileButton variant="primary" pill onClick={openDialog}>حجز موعد جديد</FileButton>
             </div>
-            <Callout title="نسخة تجريبية" tone="warning">تم الحجز بنجاح.</Callout>
+            <Callout title="احجز الان" tone="warning">تم الحجز بنجاح.</Callout>
             {addedNote && <Caption>{addedNote}</Caption>}
         </Group>
         <dialog ref={dialogRef} className="dc-dialog">
@@ -268,7 +268,7 @@ function Offers() {
                 <h2 className="dc-banner-title">ابتسامتك تستحق الأفضل</h2>
                 <p className="dc-banner-text">مرحبًا بك في مركز برايت.</p>
                 <Link className="dc-cta" to="/appointments">احجز موعدك</Link>
-                <span className="dc-soon">راحتك مهمتنا وابتاسمتك سر سعادتنا</span>
+                <span className="dc-soon">راحتك مهمتنا وابتسامتك سر سعادتنا</span>
             </div>
         </div>
         <Group label="للمرضى" heading="العروض والخصومات">
@@ -302,7 +302,7 @@ export function App() {
         <div className="dc-hero" style={{ backgroundImage: `linear-gradient(180deg, rgb(10 52 56 / 0.55), rgb(10 52 56 / 0.82)), url(${lobby})` }}>
             <span className="dc-gold-tag">***</span>
             <h1 className="dc-hero-title">{clinic.name}</h1>
-            <p className="dc-hero-text">نظام إدارة المركز: مواعيد، ملفات مرضى، وفواتير، وصفحة للمرضى. الصفحة دي مش بتحفظ بيانات، ومفيهاش بيانات مرضى.</p>
+            <p className="dc-hero-text">نظام إدارة المركز: مواعيد، ملفات مرضى، وفواتير، ومساعدة المرضى..</p>
         </div>
         <nav className="file-nav" aria-label="أقسام النظام">
             <NavLink to="/" end>الرئيسية</NavLink>
