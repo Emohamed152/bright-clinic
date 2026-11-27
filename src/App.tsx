@@ -264,14 +264,14 @@ function Offers() {
         <div className="dc-banner">
             <img src={smile} alt="صورة توضيحية لمريضة مبتسمة" className="dc-banner-img" />
             <div className="dc-banner-over">
-                <span className="dc-gold-tag">للمرضى</span>
+                <span className="dc-gold-tag">احنا معاك</span>
                 <h2 className="dc-banner-title">ابتسامتك تستحق الأفضل</h2>
                 <p className="dc-banner-text">مرحبًا بك في مركز برايت.</p>
                 <Link className="dc-cta" to="/appointments">احجز موعدك</Link>
                 <span className="dc-soon">راحتك مهمتنا وابتسامتك سر سعادتنا</span>
             </div>
         </div>
-        <Group label="للمرضى" heading="العروض والخصومات">
+        <Group label="اسال علي الخصم" heading="العروض والخصومات">
             <Callout title="العروض هتتنشر هنا قريبًا" tone="note">.</Callout>
         </Group>
         <Photos label="صور توضيحية" items={[{ src: lobby, alt: 'صورة توضيحية لاستقبال عيادة' }, { src: room, alt: 'صورة توضيحية لغرفة علاج أسنان' }]} />
